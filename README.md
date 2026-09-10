@@ -4,7 +4,33 @@
 
 DeepSeek Harness (DSH) 的 SSH 远程工作区插件——**多机并行版**：管理多台服务器、**同时保持多个 SSH 连接**，在每台上选择远程工作区，Agent 可直接查看 / 编辑 / 执行远程文件。
 
-> 适配版本：**`@deepseek-ai/dsh@0.1.2-rc.1`（最新）**（profile 上运行的 DSH Web）。
+---
+
+## ⛔ 维护状态：已暂停（2026-09-10）
+
+**本仓库后续不再跟进 DSH 官方新版本的适配。**
+
+- **最后一次适配基准**：`@deepseek-ai/dsh@0.1.2-rc.1`。
+- **未验证版本**：`0.1.5-rc.1` 及以后。仓库**不会**再针对这些版本做适配、修复或发版。
+- 代码与安装脚本保持现状可用（仍是 MIT，仍可自行 fork 继续维护），但**在 0.1.5+ 上不保证工作**。
+
+为什么停下来：DSH 0.1.5-rc.1 引入了一批与本插件直接相关的破坏性变更，跟进成本不再划算——
+
+| 官方变更（0.1.5-rc.1） | 对本插件的影响 |
+|---|---|
+| Session 格式升级至 **V3**（单向迁移） | 会话日志读取路径需重测 |
+| 新增 **session 锁**（同一 session 至多一个进程持有） | 远程/本地双实例并存模型受影响 |
+| **移除 `ctx.agent`**，调用方需显式传 Agent | host 侧注入需改 |
+| **`Inbox` 改为 type-only**（`hasPending`/`claim` 不再公开） | 需改 |
+| **Web 面板 API 变更**：新增 `sidebar.panellist` / `main`，`conversation` slot 迁至 `main.conversation`，Detail 面板移除 | 前端挂载点需整体重做 |
+| **persona 拆分为前缀 + 后缀** | `systemPrompt.section` 用法需重测 |
+
+> 如果你需要 SSH 远程工作区能力：可以 fork 本仓库，或改用上游 [flymysql/dsh-remote](https://github.com/flymysql/dsh-remote)，
+> 或参考 [chenw2759-wq/dsh-IDE](https://github.com/chenw2759-wq/dsh-IDE)（本仓库 `vendor/` 下 3 个包的来源）。
+
+---
+
+> 适配版本：**`@deepseek-ai/dsh@0.1.2-rc.1`（历史基准，见上方维护状态）**（profile 上运行的 DSH Web）。
 > ⚠️ 本插件以「同名用户 preset 覆盖」机制挂载，**DSH 官方升级后重跑一次安装脚本即可继续使用**（已有用户实测在 rc.2 → rc.1 架构重构版下正常工作）；老版本 DSH 用户同样适用，见「🔄 适配其他 DSH 版本」。
 
 ---

@@ -4,7 +4,33 @@
 
 DeepSeek Harness (DSH) SSH Remote Workspace Plugin — **multi-machine parallel edition**: manage multiple servers, **maintain multiple SSH connections simultaneously**, pick a remote workspace on each, and let your Agent directly view / edit / execute remote files.
 
-> Target version: **`@deepseek-ai/dsh@0.1.2-rc.1` (latest)** (DSH Web running on profile). Older DSH versions (0.1.1-rc.2 etc.) are also supported — see "Adapting to Other DSH Versions".
+---
+
+## ⛔ Maintenance status: paused (2026-09-10)
+
+**This repository will no longer follow new DSH releases.**
+
+- **Last adapted against**: `@deepseek-ai/dsh@0.1.2-rc.1`.
+- **Unverified**: `0.1.5-rc.1` and later. No further adaptation, fixes, or releases for those versions.
+- The code and installer remain as-is and usable (still MIT, fork it if you want to continue), but **it is not guaranteed to work on 0.1.5+**.
+
+Why we stopped: DSH 0.1.5-rc.1 shipped a batch of breaking changes that hit this plugin directly, and keeping up no longer pays off —
+
+| Official change (0.1.5-rc.1) | Impact on this plugin |
+|---|---|
+| Session format upgraded to **V3** (one-way migration) | Session-log read paths need re-testing |
+| New **session lock** (one process per session) | The remote/local dual-instance model is affected |
+| **`ctx.agent` removed** — callers must pass Agent explicitly | Host-side injection must change |
+| **`Inbox` is now type-only** (`hasPending`/`claim` no longer public) | Must change |
+| **Web panel API rework**: `sidebar.panellist` / `main` added, `conversation` slot moved under `main.conversation`, Detail panel removed | Front-end mount points need a full redo |
+| **persona split into prefix + suffix** | `systemPrompt.section` usage needs re-testing |
+
+> Need SSH remote workspaces? Fork this repo, or use upstream [flymysql/dsh-remote](https://github.com/flymysql/dsh-remote),
+> or look at [chenw2759-wq/dsh-IDE](https://github.com/chenw2759-wq/dsh-IDE) (source of the 3 vendored packages under `vendor/`).
+
+---
+
+> Target version: **`@deepseek-ai/dsh@0.1.2-rc.1`** (historical baseline — see maintenance status above) (DSH Web running on profile). Older DSH versions (0.1.1-rc.2 etc.) are also supported — see "Adapting to Other DSH Versions".
 
 ---
 
